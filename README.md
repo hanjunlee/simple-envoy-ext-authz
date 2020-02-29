@@ -1,5 +1,7 @@
 # Simple envoy ext_authz
 
+![Build](https://github.com/hanjunlee/simple-envoy-ext-authz/workflows/Build/badge.svg)
+
 ## Usage
 
 Only the `token` which passed by the argument is verified by the authorization server.
