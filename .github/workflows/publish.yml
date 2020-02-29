@@ -3,7 +3,7 @@ name: Docker
 on: deployment
 
 env:
-  IMAGE_NAME: ext-authz
+  IMAGE_NAME: hanjunlee/ext-authz
 
 jobs:
   push:
