@@ -1,0 +1,48 @@
+name: Build
+
+on: deployment
+
+env:
+  IMAGE_NAME: hanjunlee/ext-authz
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build image
+        run: |
+          docker build . --tag $IMAGE_NAME
+
+      # secret
+      - name: Log into registry
+        run: echo '${{ secrets.DOCKER_PASSWORD }}' | docker login -u hanjunlee --password-stdin
+
+      - name: Push image
+        run: |
+          VERSION=$(cat .tag)
+          echo "version: ${VERSION}"
+
+          # publish with the specific version
+          docker tag $IMAGE_NAME $IMAGE_NAME:$VERSION
+          docker push $IMAGE_NAME:$VERSION
+
+          # publish with latest tag
+          docker tag $IMAGE_NAME $IMAGE_NAME:latest
+          docker push $IMAGE_NAME:latest
+
+      - name: deployment success
+        if: success()
+        uses: deliverybot/deployment-status@v1
+        with:
+          state: success
+          token: ${{ github.token }}
+
+      - name: deployment failure
+        if: failure()
+        uses: deliverybot/deployment-status@v1
+        with:
+          state: failure
+          token: ${{ github.token }}
