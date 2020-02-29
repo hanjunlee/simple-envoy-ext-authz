@@ -30,7 +30,5 @@ steps:
       auto_tag: true
 
 trigger:
-  event:
-    - promote
   target:
     - production
