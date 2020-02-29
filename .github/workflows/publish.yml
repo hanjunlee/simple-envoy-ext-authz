@@ -1,0 +1,33 @@
+name: Docker
+
+on: deployment
+
+env:
+  IMAGE_NAME: ext-authz
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build image
+        run: |
+          docker build . --tag $IMAGE_NAME
+
+      # secret
+      - name: Log into registry
+        run: echo '${{ secrets.DOCKER_PASSWORD }}' | docker login -u hanjunlee --password-stdin
+
+      - name: Push image
+        run: |
+          VERSION=$(cat .tag)
+
+          # publish with the specific version
+          docker tag $IMAGE_NAME $IMAGE_NAME:$VERSION
+          docker push $IMAGE_ID:$VERSION
+
+          # publish with latest tag
+          docker tag $IMAGE_NAME $IMAGE_NAME:latest
+          docker push $IMAGE_ID:latest
