@@ -1,4 +1,4 @@
-name: Docker
+name: Build
 
 on: deployment
 
@@ -23,11 +23,12 @@ jobs:
       - name: Push image
         run: |
           VERSION=$(cat .tag)
+          echo "version: ${VERSION}"
 
           # publish with the specific version
           docker tag $IMAGE_NAME $IMAGE_NAME:$VERSION
-          docker push $IMAGE_ID:$VERSION
+          docker push $IMAGE_NAME:$VERSION
 
           # publish with latest tag
           docker tag $IMAGE_NAME $IMAGE_NAME:latest
-          docker push $IMAGE_ID:latest
+          docker push $IMAGE_NAME:latest
