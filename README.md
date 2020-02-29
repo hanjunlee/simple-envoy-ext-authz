@@ -13,3 +13,4 @@ Usage of server
   -token string
     	authenticated token. (default "foo")
 ```
+
