@@ -8,6 +8,6 @@ RUN go mod download
 
 COPY . /app/
 
-RUN go build -o server main.go
+RUN go build -o ext-authz cmd/main.go
 
-ENTRYPOINT ["./server"]
+ENTRYPOINT ["./ext-authz", "server"]
