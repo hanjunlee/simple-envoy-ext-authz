@@ -20,7 +20,9 @@ $ docker run -p 50051:50051  ext-authz:0.1.0 -H foo=bar -H far=baz
 # run server
 2020/03/01 15:19:38 Starting gRPC Server at :50051, valid token: foo, headers: map[far:baz foo:bar].
 ```
-
-### Envoy
-
-See [envoy](./examples/envoy) in the examples directory.
+Usage of server
+  -grpcport string
+    	grpcport. (default ":50051")
+  -token string
+    	authenticated token. (default "foo")
+```
